@@ -7,17 +7,6 @@ const { verifyToken,authorizeRoles } = require("../middleware/authMiddleware");
 
 router.get("/", verifyToken,getUsers);
 
-router.get(
-    "/business-test",
-    verifyToken,
-    authorizeRoles("CUSTOMER"),
-    (req, res) => {
-        res.status(200).json({
-            success: true,
-            message: "Business owner access granted"
-        });
-    }
-);
 
 
 module.exports = router;
