@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
 const {
     createService,
-    getServices
+    getServices,
+    updateService,
+    deleteService
 } = require("../controllers/serviceController");
-
 const {
     verifyToken,
     authorizeRoles
@@ -22,6 +22,20 @@ router.get(
     "/businesses/:id/services",
     verifyToken,
     getServices
+);
+
+router.patch(
+    "/services/:id",
+    verifyToken,
+    authorizeRoles("BUSINESS_OWNER"),
+    updateService
+);
+
+router.delete(
+    "/services/:id",
+    verifyToken,
+    authorizeRoles("BUSINESS_OWNER"),
+    deleteService
 );
 
 module.exports = router;

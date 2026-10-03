@@ -33,8 +33,48 @@ const getServicesByBusinessId = async (businessId) => {
 
     return result.rows;
 };
+const updateService = async (
+    serviceId,
+    name,
+    description,
+    averageServiceTime,
+    isActive
+) => {
+    const result = await pool.query(
+        `UPDATE services
+         SET name = COALESCE($1, name),
+             description = COALESCE($2, description),
+             average_service_time = COALESCE($3, average_service_time),
+             is_active = COALESCE($4, is_active),
+             updated_at = CURRENT_TIMESTAMP
+         WHERE id = $5
+         RETURNING *`,
+        [
+            name,
+            description,
+            averageServiceTime,
+            isActive,
+            serviceId
+        ]
+    );
+
+    return result.rows[0];
+};
+
+const deleteService = async (serviceId) => {
+    const result = await pool.query(
+        `DELETE FROM services
+         WHERE id = $1
+         RETURNING *`,
+        [serviceId]
+    );
+
+    return result.rows[0];
+};
 
 module.exports = {
     createService,
-    getServicesByBusinessId
+    getServicesByBusinessId,
+    updateService,
+    deleteService
 };

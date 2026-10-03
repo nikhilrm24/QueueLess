@@ -40,8 +40,57 @@ const getServices = async (req, res, next) => {
         next(error);
     }
 };
+const updateService = async (req, res, next) => {
+    try {
+        const {
+            name,
+            description,
+            averageServiceTime,
+            isActive
+        } = req.body;
 
+        const service = await serviceModel.updateService(
+            req.params.id,
+            name,
+            description,
+            averageServiceTime,
+            isActive
+        );
+
+        if (!service) {
+            throw new AppError("Service not found", 404);
+        }
+
+        res.status(200).json({
+            success: true,
+            data: service
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteService = async (req, res, next) => {
+    try {
+        const service = await serviceModel.deleteService(
+            req.params.id
+        );
+
+        if (!service) {
+            throw new AppError("Service not found", 404);
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Service deleted successfully"
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 module.exports = {
     createService,
-    getServices
+    getServices,
+    updateService,
+    deleteService
 };
