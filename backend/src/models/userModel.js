@@ -19,6 +19,17 @@ const createUser = async (name, email, password, role) => {
 
     return result.rows[0];
 };
+
+const getUserByEmail = async (email) => {
+    const result = await pool.query(
+        `SELECT id, name, email, password, role
+         FROM users
+         WHERE email = $1`,
+        [email]
+    );
+
+    return result.rows[0];
+};
 module.exports = {
-    getAllUsers, createUser
+    getAllUsers, createUser,getUserByEmail
 };
