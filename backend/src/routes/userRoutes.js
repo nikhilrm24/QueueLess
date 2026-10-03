@@ -10,7 +10,7 @@ router.get("/", verifyToken,getUsers);
 router.get(
     "/business-test",
     verifyToken,
-    authorizeRoles("BUSINESS_OWNER"),
+    authorizeRoles("CUSTOMER"),
     (req, res) => {
         res.status(200).json({
             success: true,
