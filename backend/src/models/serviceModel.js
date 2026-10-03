@@ -71,10 +71,21 @@ const deleteService = async (serviceId) => {
 
     return result.rows[0];
 };
+const getServiceById = async (serviceId) => {
+    const result = await pool.query(
+        `SELECT *
+         FROM services
+         WHERE id = $1`,
+        [serviceId]
+    );
+
+    return result.rows[0];
+};
 
 module.exports = {
     createService,
     getServicesByBusinessId,
     updateService,
-    deleteService
+    deleteService,
+    getServiceById
 };
