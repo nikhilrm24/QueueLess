@@ -1,4 +1,4 @@
-const {getAllUsers}=require("../models/userModel")
+const {getAllUsers,createUser}=require("../models/userModel")
 
 const getUsers = async (req, res, next) => {
     try {
@@ -12,6 +12,7 @@ const getUsers = async (req, res, next) => {
         next(error);
     }
 };
+
 
 module.exports = {
     getUsers
