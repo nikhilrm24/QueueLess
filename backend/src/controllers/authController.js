@@ -28,6 +28,10 @@ const register = async (req, res, next) => {
             data: user
         });
     } catch (error) {
+        if (error.code === "23505") {
+            return next(new AppError("Email already registered", 409));
+        }
+
         next(error);
     }
 };
